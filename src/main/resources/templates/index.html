@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/page}">
+    <table>
+        <thead>图书分页练习</thead>
+        <tr>
+            <th>编号</th>
+            <th>书名</th>
+            <th>作者</th>
+            <th>价格</th>
+        </tr>
+        <tr th:each="book:${bookPage.data}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.price}"></td>
+        </tr>
+    </table>
+    <div>
+        <a th:href="@{/page}">首页</a>
+        <a th:href="@{/page(pageNum=${bookPage.pageNum}-1)}" th:if="${bookPage.pageNum}-1 > 0">上一页</a>
+        <a th:href="@{/page(pageNum=${bookPage.pageNum}+1)}" th:if="${bookPage.pageNum}+1 <=${bookPage.pageTotal}">下一页</a>
+        <a th:href="@{/page(pageNum=${bookPage.pageTotal})}">尾页</a>
+
+        想跳转到第
+        <label>
+            <input th:name="pageNum" style="width: 10px;">
+        </label>页
+        <input type="submit" value="跳转">
+        共有【<a th:text="${bookPage.pageTotal}"></a>】页
+        当前在第【<a th:text="${bookPage.pageNum}"></a>】页
+    </div>
+</form>
+</body>
+</html>
